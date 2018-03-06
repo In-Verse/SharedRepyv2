@@ -15,6 +15,12 @@ All exceptions should come from your reference monitor.
 * Write to both positions at once
 * Copy and replace the file
 
+### Differences Between Repy and Python
+
+* log is used instead of print
+* No way for Repy to get user input
+* You cannot use import; you have to use `include` to take a file
+* There are no global variables; there is `mycontext` which is an implicit dictionary
 
 ### Extra Credit
 
