@@ -1,0 +1,72 @@
+"""
+ SOS Winter 2018
+ Networking Lab 8
+ Rosemary Davies
+ Extra credit: attacker cannot write "p0wnd" anywhere in file
+"""
+
+# Note: cannot import with Repy 
+
+# Open a file
+
+myfile=openfile("look.txt",True)
+ 
+# Attempt to write "MZ" to the file
+
+try:
+     
+    # Correctly block - Write characters MZ directly
+
+    #myfile.writeat("MZ",0)
+    
+    # Not correctly blocked - Write characters M and Z separately
+
+    myfile.writeat("M",0) 
+    myfile.writeat("Z",1)
+
+    
+     # Blocked; cannot write p0wnd anywhere
+    
+    myfile.writeat("p0wnd",2)
+
+#     # Block commented with vim; do :32,59s/^#/ to unblock and test other sections
+#  
+#     # Not correctly blocked - Write characters MZ after translated to uppercase
+# 
+#     myfile.writeat("m".upper(),0)
+#     myfile.writeat("z".upper(),1) 
+#     
+# #  Correctly blocked - ascii to char
+# 
+#     myfile.writeat("7790", 0)
+#     stringlist = [77,90]
+#     log(myfile.readat(4,0))
+#     myfile.writeat(''.join(map(chr,myfile.readat(2,0))),0)
+# 
+#     # Copy file and replace it 
+# 
+#     tempfile=openfile("replace.txt",True) # Create temp file to store contents
+#     data=myfile.readat(None,0)
+#     tempfile.writeat("M",0)
+#     tempfile.writeat("Z",1)
+#     tempfile.writeat(data,2)
+#     myfile.close() # Remove myfile
+#     removefile("look.txt")
+#     replace=openfile("look.txt",True)
+#     replace.writeat(tempfile.readat(None,0),0)
+#     removefile("replace.txt")
+#     tempfile.close() 
+#     myfile=openfile("look.txt",True) # Create myfile again
+#
+
+except ValueError:
+    log("The security layer correctly blocked the write!\n")
+
+# If no exception was raised
+
+else:
+    log("Wrote an MZ!\n\n")
+
+finally:
+    # Close the file after our attempt.
+    myfile.close()
