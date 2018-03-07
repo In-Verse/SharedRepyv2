@@ -6,67 +6,109 @@
 """
 
 # Note: cannot import with Repy
+# My functions are declared at the top
 
 # Open a file
 
 myfile=openfile("look.txt",True)
 
-# Attempt to write "MZ" to the file
-
 try:
-
-    # Correctly block - Write characters MZ directly
-
-    #myfile.writeat("MZ",0)
-
-    # Not correctly blocked - Write characters M and Z separately
-
-    myfile.writeat("M",0)
-    myfile.writeat("Z",1)
-
-
-     # Blocked; cannot write p0wnd anywhere
-
-    myfile.writeat("p0wnd",2)
-
-#     # Block commented with vim; do :32,59s/^#/ to unblock and test other sections
-#
-#     # Not correctly blocked - Write characters MZ after translated to uppercase
-#
-#     myfile.writeat("m".upper(),0)
-#     myfile.writeat("z".upper(),1)
-#
-# #  Correctly blocked - ascii to char
-#
-#     myfile.writeat("7790", 0)
-#     stringlist = [77,90]
-#     log(myfile.readat(4,0))
-#     myfile.writeat(''.join(map(chr,myfile.readat(2,0))),0)
-#
-#     # Copy file and replace it
-#
-#     tempfile=openfile("replace.txt",True) # Create temp file to store contents
-#     data=myfile.readat(None,0)
-#     tempfile.writeat("M",0)
-#     tempfile.writeat("Z",1)
-#     tempfile.writeat(data,2)
-#     myfile.close() # Remove myfile
-#     removefile("look.txt")
-#     replace=openfile("look.txt",True)
-#     replace.writeat(tempfile.readat(None,0),0)
-#     removefile("replace.txt")
-#     tempfile.close()
-#     myfile=openfile("look.txt",True) # Create myfile again
-#
+    log("\n------------------------------\n")
+    log("Write characters MZ directly")
+    log("\n------------------------------\n")
+    myfile.writeat("MZ",0)
 
 except ValueError:
     log("The security layer correctly blocked the write!\n")
-
-# If no exception was raised
+    pass
 
 else:
-    log("Wrote an MZ!\n\n")
+    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+
+try:
+    log("\n------------------------------\n")
+    log("Write characters M and Z separately")
+    log("\n------------------------------\n")
+    myfile.writeat("M", 0)
+    myfile.writeat("Z",1)
+
+except ValueError:
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+
+try:
+    log("\n------------------------------\n")
+    log("Write p0wnd somewhere in file")
+    log("\n------------------------------\n")
+    myfile.writeat("p0wnd",2)
+    myfile.writeat("p0wnd",10)
+
+except ValueError:
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+
+try:
+    log("\n------------------------------\n")
+    log("Write characters MZ after translated to uppercase")
+    log("\n------------------------------\n")
+    myfile.writeat("m".upper(),0)
+    myfile.writeat("z".upper(),1)
+
+except ValueError:
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+
+try:
+    log("\n------------------------------\n")
+    log("Ascii 7790 to char MZ")
+    log("\n------------------------------\n")
+    #myfile.writeat("7790", 0)
+    #stringlist = [77,90]
+    #myfile.writeat(''.join(map(chr,myfile.readat(2,0))),0)
+
+except ValueError:
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+
+try:
+    log("\n------------------------------\n")
+    log("Copy File and Replace")
+    log("\n------------------------------\n")
+    data=myfile.readat(None,0)
+    tempfile=openfile("replace.txt",True) # Create temp file to store contents
+    tempfile.writeat("M",0)
+    tempfile.writeat("Z",1)
+    tempfile.writeat(data,2)
+    myfile.close() # Remove myfile
+    #removefile("look.txt")
+    #replace=openfile("look.txt",True)
+    #replace.writeat(tempfile.readat(None,0),0)
+    tempfile.close()
+    removefile("replace.txt")
+    myfile=openfile("look.txt",True) # Create myfile again
+
+except ValueError:
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+
+
 
 finally:
     # Close the file after our attempt.
+    log(myfile.readat(2,0))
     myfile.close()

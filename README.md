@@ -1,10 +1,12 @@
-Shared Repy Code
-
+# Shared Repy Code
+---
 > Embrace the cat and mouse game.
 
 If attack successfully writes a MZ, and the reference monitor doesn't raise an error or exception - that's bad. If an exception from attack results in Repy API - that's bad.
 
 All exceptions should come from your reference monitor.
+
+`python repy.py restrictions.default encasementlib.r2py seclayer.r2py attacklayer.r2py`
 
 ### Attacking Ideas
 

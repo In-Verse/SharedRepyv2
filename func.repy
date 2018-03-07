@@ -1,0 +1,3 @@
+def writeMZfirst(file,string,offset):
+    file.writeat(string, offset)
+
