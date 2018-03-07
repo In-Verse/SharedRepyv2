@@ -6,8 +6,6 @@ If attack successfully writes a MZ, and the reference monitor doesn't raise an e
 
 All exceptions should come from your reference monitor.
 
-`python repy.py restrictions.default encasementlib.r2py seclayer.r2py attacklayer.r2py`
-
 ### Attacking Ideas
 
 * Write MZ not at 0, but then delete till its there
@@ -27,3 +25,9 @@ All exceptions should come from your reference monitor.
 ### Extra Credit
 
 Made a second security layer that stops an attacker from writing p0wned if it appears in the data.
+
+### Executing
+
+>#!/bin/bash
+echo "hereissomedata" > look.txt
+python repy.py restrictions.default encasementlib.r2py reference_monitor.r2py attack.r2py

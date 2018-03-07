@@ -8,74 +8,81 @@
 # Note: cannot import with Repy
 # My functions are declared at the top
 
+def movdatup(file, offset):
+    text = file.readat(None,0)
+    file.writeat(text,offset)
+    return;
+
 # Open a file
 
 myfile=openfile("look.txt",True)
+log("\n")
+log("Our file is currently:" , myfile.readat(None,0))
 
 try:
-    log("\n------------------------------\n")
-    log("Write characters MZ directly")
-    log("\n------------------------------\n")
+    log("\n------------------------------------------------------------\n")
+    log("Write characters MZ together and directly")
+    log("\n------------------------------------------------------------\n")
+    movdatup(myfile, 1)
     myfile.writeat("MZ",0)
 
 except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
     log("The security layer correctly blocked the write!\n")
     pass
 
 else:
     log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+    log("\n")
+    log("Our file is currently:" , myfile.readat(None,0))
 
 try:
-    log("\n------------------------------\n")
+    log("\n------------------------------------------------------------\n")
     log("Write characters M and Z separately")
-    log("\n------------------------------\n")
+    log("\n------------------------------------------------------------\n")
+    movdatup(myfile, 1)
     myfile.writeat("M", 0)
     myfile.writeat("Z",1)
 
 except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
     log("The security layer correctly blocked the write!\n")
     pass
 
 else:
     log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+    log("\n")
+    log("Our file is currently:" , myfile.readat(None,0))
 
 try:
-    log("\n------------------------------\n")
-    log("Write p0wnd somewhere in file")
-    log("\n------------------------------\n")
-    myfile.writeat("p0wnd",2)
-    myfile.writeat("p0wnd",10)
-
-except ValueError:
-    log("The security layer correctly blocked the write!\n")
-    pass
-
-else:
-    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
-
-try:
-    log("\n------------------------------\n")
+    log("\n------------------------------------------------------------\n")
     log("Write characters MZ after translated to uppercase")
-    log("\n------------------------------\n")
+    log("\n------------------------------------------------------------\n")
+    movdatup(myfile, 1)
     myfile.writeat("m".upper(),0)
     myfile.writeat("z".upper(),1)
 
 except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
     log("The security layer correctly blocked the write!\n")
     pass
 
 else:
     log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+    log("\n")
+    log("Our file is currently:" , myfile.readat(None,0))
 
 try:
-    log("\n------------------------------\n")
+    log("\n------------------------------------------------------------\n")
     log("Ascii 7790 to char MZ")
-    log("\n------------------------------\n")
-    #myfile.writeat("7790", 0)
+    log("\n------------------------------------------------------------\n")
+    movdatup(myfile, 1)
+    myfile.writeat("7790", 0)
     #stringlist = [77,90]
     #myfile.writeat(''.join(map(chr,myfile.readat(2,0))),0)
 
 except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
     log("The security layer correctly blocked the write!\n")
     pass
 
@@ -83,32 +90,57 @@ else:
     log("¯\_(ツ)_/¯\nWrote an MZ!\n")
 
 try:
-    log("\n------------------------------\n")
+    log("\n------------------------------------------------------------\n")
     log("Copy File and Replace")
-    log("\n------------------------------\n")
-    data=myfile.readat(None,0)
-    tempfile=openfile("replace.txt",True) # Create temp file to store contents
-    tempfile.writeat("M",0)
-    tempfile.writeat("Z",1)
-    tempfile.writeat(data,2)
-    myfile.close() # Remove myfile
+    log("\n------------------------------------------------------------\n")
+    #data=myfile.readat(None,0)
+    #tempfile=openfile("replace.txt",True) # Create temp file to store contents
+    #tempfile.writeat("M",0)
+    #tempfile.writeat("Z",1)
+    #tempfile.writeat(data,2)
+    #myfile.close() # Remove myfile
+    #sleep(1)
     #removefile("look.txt")
+    #sleep(1)
     #replace=openfile("look.txt",True)
     #replace.writeat(tempfile.readat(None,0),0)
-    tempfile.close()
-    removefile("replace.txt")
-    myfile=openfile("look.txt",True) # Create myfile again
+    #tempfile.close()
+    #replace.close()
+    #sleep(1)
+    #removefile("replace.txt")
+    #myfile=openfile("look.txt",True) # Create myfile again
 
 except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
     log("The security layer correctly blocked the write!\n")
     pass
 
 else:
     log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+    log("\n")
+    log("Our file is currently:" , myfile.readat(None,0))
 
+try:
+    log("\n------------------------------------------------------------\n")
+    log("Write p0wnd somewhere in file")
+    log("\n------------------------------------------------------------\n")
+    offset=5
+    movdatup(myfile, offset)
+    myfile.writeat("p0wnd",offset)
 
+except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    log("¯\_(ツ)_/¯\nWrote an p0wnd!\n")
+    log("\n")
+    log("Our file is currently:" , myfile.readat(None,0))
 
 finally:
     # Close the file after our attempt.
-    log(myfile.readat(2,0))
+    log("\n")
+    log("Our file is currently:" , myfile.readat(None,0))
+    sleep(1)
     myfile.close()
