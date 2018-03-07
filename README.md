@@ -24,6 +24,7 @@ file system.
 
 ### Code Safety
 
+<<<<<<< HEAD
 Repy ensures code safety in the sense that buggy or deliberately destructive
 code cannot harm the host machine. This is done in three ways: First, the code
 is checked statically for constructs that we consider unsafe, see
@@ -37,6 +38,8 @@ performs checks on every call to the
 [RepyV2 API functions](https://github.com/SeattleTestbed/docs/blob/master/Programming/RepyV2API.md).
 This guarantees that only specific types of variables can be passed to and
 returned from the API.
+=======
+>>>>>>> parent of 925f8af... More info about Repy
 
 Third, the RepyV2 API also defends itself against attempts of otherwise abusing
 call parameters. For example, the functions for accessing files will not accept
