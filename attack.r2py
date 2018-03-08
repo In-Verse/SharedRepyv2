@@ -8,6 +8,12 @@
 # Note: cannot import with Repy
 # My functions are declared at the top
 
+def checkmz(file):
+    if (file.readat(2,0) == 'MZ'):
+        return True;
+    else:
+        return False;
+
 def movdatup(file, offset):
     text = file.readat(None,0)
     file.writeat(text,offset)
@@ -23,7 +29,6 @@ try:
     log("\n------------------------------------------------------------\n")
     log("Write characters MZ together and directly")
     log("\n------------------------------------------------------------\n")
-    movdatup(myfile, 1)
     myfile.writeat("MZ",0)
 
 except ValueError:
@@ -32,7 +37,7 @@ except ValueError:
     pass
 
 else:
-    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+    log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
     log("\n")
     log("Our file is currently:" , myfile.readat(None,0))
 
@@ -40,9 +45,14 @@ try:
     log("\n------------------------------------------------------------\n")
     log("Write characters M and Z separately")
     log("\n------------------------------------------------------------\n")
-    movdatup(myfile, 1)
-    myfile.writeat("M", 0)
-    myfile.writeat("Z",1)
+    if checkmz(myfile):
+        log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
+        myfile.writeat("M", 0)
+        myfile.writeat("Z",1)
+    else:
+        movdatup(myfile, 2)
+        myfile.writeat("M", 0)
+        myfile.writeat("Z",1)
 
 except ValueError:
     log("\n(ノಠ益ಠ)ノ彡┻━┻")
@@ -50,7 +60,7 @@ except ValueError:
     pass
 
 else:
-    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+    log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
     log("\n")
     log("Our file is currently:" , myfile.readat(None,0))
 
@@ -58,9 +68,14 @@ try:
     log("\n------------------------------------------------------------\n")
     log("Write characters MZ after translated to uppercase")
     log("\n------------------------------------------------------------\n")
-    movdatup(myfile, 1)
-    myfile.writeat("m".upper(),0)
-    myfile.writeat("z".upper(),1)
+    if checkmz(myfile):
+        log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
+        myfile.writeat("m".upper(),0)
+        myfile.writeat("z".upper(),1)
+    else:
+        movdatup(myfile, 2)
+        myfile.writeat("m".upper(),0)
+        myfile.writeat("z".upper(),1)
 
 except ValueError:
     log("\n(ノಠ益ಠ)ノ彡┻━┻")
@@ -68,18 +83,23 @@ except ValueError:
     pass
 
 else:
-    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+    log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
     log("\n")
     log("Our file is currently:" , myfile.readat(None,0))
 
+"""
 try:
     log("\n------------------------------------------------------------\n")
     log("Ascii 7790 to char MZ")
     log("\n------------------------------------------------------------\n")
-    movdatup(myfile, 1)
-    myfile.writeat("7790", 0)
-    #stringlist = [77,90]
-    #myfile.writeat(''.join(map(chr,myfile.readat(2,0))),0)
+    if checkmz(myfile):
+        log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
+        myfile.writeat(log('\x4D'),0)
+        myfile.writeat(log('\x7A'),1)
+    else:
+        movdatup(myfile, 2)
+        myfile.writeat(log('\x4D'),0)
+        myfile.writeat(log('\x7A'),1)
 
 except ValueError:
     log("\n(ノಠ益ಠ)ノ彡┻━┻")
@@ -87,12 +107,16 @@ except ValueError:
     pass
 
 else:
-    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
-
+    log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
+    log("\n")
+    log("Our file is currently:" , myfile.readat(None,0))
+"""
 try:
     log("\n------------------------------------------------------------\n")
     log("Copy File and Replace")
     log("\n------------------------------------------------------------\n")
+    log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
+    myfile.writeat("M", 0)
     #data=myfile.readat(None,0)
     #tempfile=openfile("replace.txt",True) # Create temp file to store contents
     #tempfile.writeat("M",0)
@@ -116,17 +140,29 @@ except ValueError:
     pass
 
 else:
-    log("¯\_(ツ)_/¯\nWrote an MZ!\n")
+    log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
     log("\n")
     log("Our file is currently:" , myfile.readat(None,0))
 
+# Make it random number modded by the file length AND not at 0 or 1
+# Cannot write random number without Python's numpy/random.choice :(
+# data is <str>
 try:
     log("\n------------------------------------------------------------\n")
     log("Write p0wnd somewhere in file")
     log("\n------------------------------------------------------------\n")
     offset=5
-    movdatup(myfile, offset)
+    data=myfile.readat(None,0)
+    length=len(data)
+    p2=myfile.readat(length,offset)
+    p1=myfile.readat(offset,0)
+    myfile.close()
+    sleep(1)
+    removefile("look.txt")
+    myfile=openfile("look.txt",True) # Create temp file to store contents
+    myfile.writeat(p1,0)
     myfile.writeat("p0wnd",offset)
+    myfile.writeat(p2,offset+5)
 
 except ValueError:
     log("\n(ノಠ益ಠ)ノ彡┻━┻")
@@ -134,7 +170,7 @@ except ValueError:
     pass
 
 else:
-    log("¯\_(ツ)_/¯\nWrote an p0wnd!\n")
+    log("\n¯\_(ツ)_/¯ Guess ur p0wnd \n")
     log("\n")
     log("Our file is currently:" , myfile.readat(None,0))
 
