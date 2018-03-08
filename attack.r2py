@@ -19,6 +19,18 @@ def movdatup(file, offset):
     file.writeat(text,offset)
     return;
 
+def overwrite(file):
+    log("Executing")
+    data = file.readat(None,0)
+    log(data)
+    tempfile=openfile("replace.txt", True)
+    tempfile.writeat("M",0)
+    tempfile.writeat("Z",1)
+    #log(tempfile.readat(None,0))
+    tempfile.writeat(data,2)
+    #log(tempfile.readat(None,0))
+    tempfile.close()
+
 # Open a file
 
 myfile=openfile("look.txt",True)
@@ -87,19 +99,46 @@ else:
     log("\n")
     log("Our file is currently:" , myfile.readat(None,0))
 
-"""
 try:
     log("\n------------------------------------------------------------\n")
     log("Ascii 7790 to char MZ")
     log("\n------------------------------------------------------------\n")
     if checkmz(myfile):
         log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
-        myfile.writeat(log('\x4D'),0)
-        myfile.writeat(log('\x7A'),1)
+        myfile.writeat(chr(77),0)
+        myfile.writeat(chr(90),1)
+        #myfile.writeat(log('\x4D'),0)
+        #myfile.writeat(log('\x7A'),1)
     else:
         movdatup(myfile, 2)
-        myfile.writeat(log('\x4D'),0)
-        myfile.writeat(log('\x7A'),1)
+        myfile.writeat(chr(77),0)
+        myfile.writeat(chr(90),1)
+        #myfile.writeat(log('\x4D'),0)
+        #myfile.writeat(log('\x4D'),0)
+        #myfile.writeat(log('\x7A'),1)
+
+except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
+    log("\n")
+    log("Our file is currently:" , myfile.readat(None,0))
+
+# TO DO
+"""
+try:
+    log("\n------------------------------------------------------------\n")
+    log("Copy File and Replace")
+    log("\n------------------------------------------------------------\n")
+    if checkmz(myfile):
+        log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
+        overwrite(myfile)
+    else:
+        movdatup(myfile, 2)
+        overwrite(myfile)
 
 except ValueError:
     log("\n(ノಠ益ಠ)ノ彡┻━┻")
@@ -111,38 +150,6 @@ else:
     log("\n")
     log("Our file is currently:" , myfile.readat(None,0))
 """
-try:
-    log("\n------------------------------------------------------------\n")
-    log("Copy File and Replace")
-    log("\n------------------------------------------------------------\n")
-    log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
-    myfile.writeat("M", 0)
-    #data=myfile.readat(None,0)
-    #tempfile=openfile("replace.txt",True) # Create temp file to store contents
-    #tempfile.writeat("M",0)
-    #tempfile.writeat("Z",1)
-    #tempfile.writeat(data,2)
-    #myfile.close() # Remove myfile
-    #sleep(1)
-    #removefile("look.txt")
-    #sleep(1)
-    #replace=openfile("look.txt",True)
-    #replace.writeat(tempfile.readat(None,0),0)
-    #tempfile.close()
-    #replace.close()
-    #sleep(1)
-    #removefile("replace.txt")
-    #myfile=openfile("look.txt",True) # Create myfile again
-
-except ValueError:
-    log("\n(ノಠ益ಠ)ノ彡┻━┻")
-    log("The security layer correctly blocked the write!\n")
-    pass
-
-else:
-    log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
-    log("\n")
-    log("Our file is currently:" , myfile.readat(None,0))
 
 # Make it random number modded by the file length AND not at 0 or 1
 # Cannot write random number without Python's numpy/random.choice :(

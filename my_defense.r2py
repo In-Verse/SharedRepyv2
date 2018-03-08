@@ -29,11 +29,13 @@ class SecureFile():
 
   def writeat(self,data,offset):
     BUFFER.append("writeat")
+
     # Blocks if p0wnd in string; should check after
     if "p0wnd" in data:
         raise ValueError("Cannot have p0wnd!")
-    #if "MZ" in data:
-    #    raise ValueError("Plz no MZ")
+
+    if ("MZ" in data):
+        raise ValueError("Plz no MZ")
     if data.startswith("MZ") and (offset == 0):
         raise ValueError("Cannot start file with MZ!")
     else:
