@@ -1,0 +1,160 @@
+"""
+ SOS Winter 2018
+ Rosemary Davies
+
+ Final that tests for multithreading
+"""
+
+# Note: cannot import with Repy
+# My functions are declared at the top
+# makez and makem must be static functions
+
+def makez():
+    #myfile=openfile("look.txt",True)
+    myfile.writeat("Z",1)
+    #myfile.close()
+
+def makem():
+    #myfile=openfile("look.txt",True)
+    myfile.writeat("M",0)
+    #myfile.close()
+
+def checkmz(file):
+    if (file.readat(2,0) == 'MZ'):
+        #log(file.readat(2,0))
+        return True
+    else:
+        return False
+
+def movdatup(file, offset):
+    offset = offset - 1 #This is to correct my offset mistake
+    text = file.readat(None,0)
+    log("Moving text: ", text)
+    file.writeat(text,offset)
+    return
+
+def overwrite(file):
+    log("Executing")
+    data = file.readat(None,0)
+    log(data)
+    tempfile=openfile("replace.txt", True)
+    tempfile.writeat("M",0)
+    tempfile.writeat("Z",1)
+    #log(tempfile.readat(None,0))
+    tempfile.writeat(data,2)
+    #log(tempfile.readat(None,0))
+    tempfile.close()
+
+# Open a file
+
+myfile=openfile("look.txt",True)
+log("\n")
+log("Our file is currently:" , myfile.readat(None,0))
+
+try:
+    log("\n------------------------------------------------------------\n")
+    log("Write characters MZ together and directly")
+    log("\n------------------------------------------------------------\n")
+    movdatup(myfile, 2)
+    myfile.writeat("MZ",0)
+
+except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    if checkmz(myfile):
+        log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
+        log("Our file is currently:" , myfile.readat(None,0))
+    else:
+        log("\n┬──┬ ¯\_(ツ) Nothing changed. \n")
+        log("\n")
+        log("Our file is currently:" , myfile.readat(None,0))
+
+try:
+    log("\n------------------------------------------------------------\n")
+    log("Write characters M and Z separately")
+    log("\n------------------------------------------------------------\n")
+    if checkmz(myfile):
+        log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
+        myfile.writeat("M", 0)
+        myfile.writeat("Z",1)
+    else:
+        movdatup(myfile, 2)
+        myfile.writeat("M", 0)
+        myfile.writeat("Z",1)
+
+except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    if checkmz(myfile):
+        log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
+        log("Our file is currently:" , myfile.readat(None,0))
+    else:
+        log("\n┬──┬ ¯\_(ツ) Nothing changed. \n")
+        log("\n")
+        log("Our file is currently:" , myfile.readat(None,0))
+
+try:
+    log("\n------------------------------------------------------------\n")
+    log("Write characters MZ after translated to uppercase")
+    log("\n------------------------------------------------------------\n")
+    if checkmz(myfile):
+        log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
+        myfile.writeat("m".upper(),0)
+        myfile.writeat("z".upper(),1)
+    else:
+        movdatup(myfile, 2)
+        myfile.writeat("m".upper(),0)
+        myfile.writeat("z".upper(),1)
+
+except ValueError:
+    log("\n(ノಠ益ಠ)ノ彡┻━┻")
+    log("The security layer correctly blocked the write!\n")
+    pass
+
+else:
+    if checkmz(myfile):
+        log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
+        log("Our file is currently:" , myfile.readat(None,0))
+    else:
+        log("\n┬──┬ ¯\_(ツ) Nothing changed. \n")
+        log("\n")
+        log("Our file is currently:" , myfile.readat(None,0))
+
+try:
+    log("\n------------------------------------------------------------\n")
+    log("Multithreading Approach")
+    log("\n------------------------------------------------------------\n")
+    if checkmz(myfile):
+        log("~~~~~ Overwriting Over Previous MZ ~~~~~\n")
+        createthread(makem)
+        createthread(makez)
+        #sleep(1)
+    else:
+        log("Now I'm going to multithread!\n")
+        movdatup(myfile, 2)
+        createthread(makem)
+        createthread(makez)
+        #sleep(1)
+
+    if (myfile.readat(None,2) == "MZ"):
+        log("\n¯\_(ツ)_/¯ Wrote an MZ!\n")
+        log("\n")
+        log("Our file is currently:" , myfile.readat(None,0))
+
+    else:
+        log("\n(ノಠ益ಠ)ノ彡┻━┻")
+        log("The security layer correctly blocked the write!\n")
+
+finally:
+    # Close the file after our attempt.
+    log("\n")
+    log("Our file is currently:" , myfile.readat(None,0))
+    log("\n")
+    #sleep(1)
+    myfile.close()
